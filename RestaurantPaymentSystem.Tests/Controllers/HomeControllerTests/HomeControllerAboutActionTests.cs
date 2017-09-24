@@ -1,32 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RestaurantPaymentSystem;
 using RestaurantPaymentSystem.Controllers;
 
-namespace RestaurantPaymentSystem.Tests.Controllers
+namespace RestaurantPaymentSystem.Tests.Controllers.HomeControllerTests
 {
     [TestClass]
-    public class HomeControllerTest
+    public class HomeControllerAboutActionTests
     {
+
         [TestMethod]
-        public void Index()
+        public void HomeControllerAboutActionNotNull()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.About() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void About()
+        public void HomeControllerAboutActionCheckViewBagMessage()
         {
             // Arrange
             HomeController controller = new HomeController();
@@ -37,18 +33,8 @@ namespace RestaurantPaymentSystem.Tests.Controllers
             // Assert
             Assert.AreEqual("Your application description page.", result.ViewBag.Message);
         }
-
-        [TestMethod]
-        public void Contact()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.Contact() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
     }
 }
+
+
+    

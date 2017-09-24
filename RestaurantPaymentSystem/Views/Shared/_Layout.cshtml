@@ -29,6 +29,35 @@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
+        <div class="container">
+            <div class="dropdown">
+                <button class="dropbtn">Profile</button>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("Index", "Profile")">My Profile</a>
+                    <a href="@Url.Action("AllProfiles", "Profile")">Manage User Profiles</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("AllCategories", "Category")">Categories</a>
+                    <a href="@Url.Action("AllSubcategories", "Subcategory")">Subcategories</a>
+                    <a href="@Url.Action("AllItems", "Item")">Items</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Tables</button>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("AllTables", "Table")">Manage Tables</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Reports</button>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("AllReports", "Report")">Manage Reports</a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="container body-content">
         @RenderBody()
