@@ -49,9 +49,8 @@ namespace RestaurantPaymentSystem.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,6 +63,18 @@ namespace RestaurantPaymentSystem.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
+
+        [Required]
+        [Display(Name = "User Name")]
+        public string Username { get; set; }
+
+        [Required]
+        [Display(Name = "Role")]
+        public string Role { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
