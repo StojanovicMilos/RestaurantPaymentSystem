@@ -30,7 +30,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         }
 
         [TestMethod]
-        public void TableControllerAllTablesActionHasTabes()
+        public void TableControllerAllTablesActionHasTables()
         {
             //arrange
             var table0 = Constants.tables[0];
