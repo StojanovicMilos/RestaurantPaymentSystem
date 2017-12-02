@@ -91,6 +91,9 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeControllerTests\HomeControllerAboutActionTests.cs" />
     <Compile Include="Controllers\HomeControllerTests\HomeControllerContactActionTests.cs" />
+    <Compile Include="Controllers\TableControllerTests\TableControllerTests.cs" />
+    <Compile Include="DB\Constants.cs" />
+    <Compile Include="DB\InMemoryRestaurantPaymentSystemDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTests\HomeControllerIndexActionTests.cs" />
   </ItemGroup>
