@@ -16,18 +16,18 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
             return new TableController(new InMemoryRestaurantPaymentSystemDB());
         }
 
-        [TestMethod]
-        public void TableControllerAllTablesActionNotNull()
-        {
-            //arrange
-            TableController tableController = GetTableController();
+        //[TestMethod]
+        //public void TableControllerAllTablesActionNotNull()
+        //{
+        //    //arrange
+        //    TableController tableController = GetTableController();
 
-            //act
-            ActionResult result = tableController.AllTables();
+        //    //act
+        //    ActionResult result = tableController.AllTables();
 
-            //assert
-            Assert.IsNotNull(result);
-        }
+        //    //assert
+        //    Assert.IsNotNull(result);
+        //}
 
         [TestMethod]
         public void TableControllerAllTablesActionHasTables()
@@ -47,5 +47,18 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
             CollectionAssert.Contains(model.ToList(), table1);
             CollectionAssert.Contains(model.ToList(), table2);
         }
+
+        //[TestMethod]
+        //public void TableControllerCreateTableActionNotNull()
+        //{
+        //    //arrange
+        //    TableController tableController = GetTableController();
+
+        //    //act
+        //    ActionResult result = tableController.Create();
+
+        //    //assert
+        //    Assert.IsNotNull(result);
+        //}
     }
 }

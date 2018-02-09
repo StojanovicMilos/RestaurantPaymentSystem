@@ -1,4 +1,5 @@
 ﻿using RestaurantPaymentSystem.DB;
+using RestaurantPaymentSystem.Models;
 using System.Web.Mvc;
 
 namespace RestaurantPaymentSystem.Controllers
@@ -38,13 +39,16 @@ namespace RestaurantPaymentSystem.Controllers
 
         // POST: Table/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(TableViewModel table)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (!ModelState.IsValid)
+                {
+                    return View(table);
+                }
+                _db.CreateNewTable(table);
+                return RedirectToAction("AllTables");
             }
             catch
             {
@@ -60,13 +64,18 @@ namespace RestaurantPaymentSystem.Controllers
 
         // POST: Table/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(TableViewModel table)
         {
             try
             {
-                // TODO: Add delete logic here
+                var tableExists = _db.GetTableByID(table.ID) != null;
+                var tableHasNoOrders = true; //TODO add logic later
+                if (tableExists && tableHasNoOrders)
+                {
+                    _db.DeleteTable(table.ID);
+                }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("AllTables");
             }
             catch
             {
