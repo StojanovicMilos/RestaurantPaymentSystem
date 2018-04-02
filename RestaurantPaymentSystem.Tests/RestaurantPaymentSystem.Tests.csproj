@@ -89,9 +89,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Shared\ControllerFactory.cs" />
     <Compile Include="Controllers\HomeControllerTests\HomeControllerAboutActionTests.cs" />
     <Compile Include="Controllers\HomeControllerTests\HomeControllerContactActionTests.cs" />
-    <Compile Include="Controllers\TableControllerTests\TableControllerTests.cs" />
+    <Compile Include="Controllers\TableControllerTests\TableControllerAllTablesActionTests.cs" />
+    <Compile Include="Controllers\TableControllerTests\TableControllerCreateActionTests.cs" />
+    <Compile Include="Controllers\TableControllerTests\TableControllerDeleteActionTests.cs" />
+    <Compile Include="Controllers\TableControllerTests\TableControllerDetailsActionTests.cs" />
     <Compile Include="DB\Constants.cs" />
     <Compile Include="DB\InMemoryRestaurantPaymentSystemDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -22,65 +22,52 @@ namespace RestaurantPaymentSystem.Controllers
         public ActionResult AllTables()
         {
             var model = _db.GetTables();
-            return View(model);
+            return View("alltables", model);
         }
 
         // GET: Table/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var model = _db.GetTableByID(id);
+            return View("details", model);
         }
 
         // GET: Table/Create
         public ActionResult Create()
         {
-            return View();
+            return View("create");
         }
 
         // POST: Table/Create
         [HttpPost]
         public ActionResult Create(TableViewModel table)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(table);
-                }
-                _db.CreateNewTable(table);
-                return RedirectToAction("AllTables");
+                return View("create", table);
             }
-            catch
-            {
-                return View();
-            }
+            _db.CreateNewTable(table);
+            return AllTables();
         }
 
         // GET: Table/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View("delete");
         }
 
         // POST: Table/Delete/5
         [HttpPost]
         public ActionResult Delete(TableViewModel table)
         {
-            try
+            var tableExists = _db.GetTableByID(table.ID) != null;
+            var tableHasNoOrders = true; //TODO add logic later
+            if (tableExists && tableHasNoOrders)
             {
-                var tableExists = _db.GetTableByID(table.ID) != null;
-                var tableHasNoOrders = true; //TODO add logic later
-                if (tableExists && tableHasNoOrders)
-                {
-                    _db.DeleteTable(table.ID);
-                }
-
-                return RedirectToAction("AllTables");
+                _db.DeleteTable(table.ID);
+                return AllTables();
             }
-            catch
-            {
-                return View();
-            }
+            return HttpNotFound();
         }
     }
 }
