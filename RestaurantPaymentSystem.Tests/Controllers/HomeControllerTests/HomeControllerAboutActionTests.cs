@@ -8,18 +8,20 @@ namespace RestaurantPaymentSystem.Tests.Controllers.HomeControllerTests
     public class HomeControllerAboutActionTests
     {
 
-        //[TestMethod]
-        //public void HomeControllerAboutActionNotNull()
-        //{
-        //    // Arrange
-        //    HomeController controller = new HomeController();
+        [TestMethod]
+        public void HomeControllerAboutActionRendersRightView()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+            string viewName = "about";
 
-        //    // Act
-        //    ViewResult result = controller.About() as ViewResult;
+            // Act
+            ViewResult result = controller.About() as ViewResult;
 
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //}
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+        }
 
         [TestMethod]
         public void HomeControllerAboutActionCheckViewBagMessage()

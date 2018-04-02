@@ -1,5 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using RestaurantPaymentSystem.Controllers;
 
 namespace RestaurantPaymentSystem.Tests.Controllers.HomeControllerTests
@@ -7,17 +10,20 @@ namespace RestaurantPaymentSystem.Tests.Controllers.HomeControllerTests
     [TestClass]
     public class HomeControllerIndexActionTests
     {
-        //[TestMethod]
-        //public void HomeControllerIndexActionNotNull()
-        //{
-        //    // Arrange
-        //    HomeController controller = new HomeController();
 
-        //    // Act
-        //    ViewResult result = controller.Index() as ViewResult;
+        [TestMethod]
+        public void HomeControllerIndexActionRendersRightView()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+            string viewName = "index";
 
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //}
+            // Act
+            ViewResult result = controller.Index() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+        }
     }
 }
