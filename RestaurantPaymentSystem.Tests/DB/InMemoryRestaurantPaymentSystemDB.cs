@@ -8,39 +8,98 @@ namespace RestaurantPaymentSystem.Tests.DB
 {
     class InMemoryRestaurantPaymentSystemDB : IRestaurantPaymentSystemDB
     {
-        private List<TableViewModel> _tables;
+        private List<Table> _tables;
+        private List<Category> _categories;
+        private List<Subcategory> _subcategories;
 
         public InMemoryRestaurantPaymentSystemDB()
         {
-            _tables = new List<TableViewModel>();
-            foreach(TableViewModel table in Constants.tables)
+            _tables = new List<Table>();
+            foreach(Table table in Constants.TablesInDatabase)
             {
                 _tables.Add(table);
+            }
+
+            _categories = new List<Category>();
+            foreach(Category category in Constants.CategoriesInDatabase)
+            {
+                _categories.Add(category);
+            }
+
+            _subcategories = new List<Subcategory>();
+            foreach (Subcategory subcategory in Constants.SubcategoriesInDatabase)
+            {
+                _subcategories.Add(subcategory);
             }
         }
 
         public Exception ExceptionToThrow { get; set; }
 
-        public void CreateNewTable(TableViewModel tableViewModel)
+        public void SaveNewCategory(Category category)
+        {
+            _categories.Add(category);
+        }
+
+        public void SaveExistingCategory(Category existingCategory, Category category)
+        {
+            CategoryMappers.MapNewModelToExistingModel(category, existingCategory);
+        }
+
+        public void SaveNewTable(Table table)
         {
             if (ExceptionToThrow != null)
                 throw ExceptionToThrow;
-            _tables.Add(tableViewModel);
+            _tables.Add(table);
         }
 
-        public void DeleteTable(int id)
+        public void DeleteCategory(Category category)
         {
-            _tables.Remove(GetTableByID(id));
+            _categories.Remove(category);
         }
 
-        public TableViewModel GetTableByID(int id)
+        public void SaveNewSubcategory(Subcategory subcategory)
         {
-            return _tables.FirstOrDefault(t => t.ID == id);
+            _subcategories.Add(subcategory);
         }
 
-        public IEnumerable<TableViewModel> GetTables()
+        public void SaveExistingSubcategory(Subcategory existingSubcategory, Subcategory subcategory)
         {
-            return _tables;
+            SubcategoryMappers.MapNewModelToExistingModel(subcategory, existingSubcategory);
+        }
+
+        public void DeleteSubcategory(Subcategory subcategory)
+        {
+            _subcategories.Remove(subcategory);
+        }
+
+        public void DeleteTable(Table table)
+        {
+            _tables.Remove(table);
+        }
+
+        public void Dispose()
+        {
+
+        }
+
+        public IQueryable<Category> GetCategories()
+        {
+            return _categories.AsQueryable();
+        }
+
+        public Category GetCategory(int id)
+        {
+            return _categories.Find(c => c.Id == id);
+        }
+
+        public Table GetTable(int id)
+        {
+            return _tables.Find(t => t.Id == id);
+        }
+
+        IQueryable<Table> IRestaurantPaymentSystemDB.GetTables()
+        {
+            return _tables.AsQueryable();
         }
     }
 }

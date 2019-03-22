@@ -1,0 +1,93 @@
+﻿@model IEnumerable<RestaurantPaymentSystem.Models.Category>
+
+@{
+    ViewBag.Title = "All Subcategories";
+}
+
+<h2>All Subcategories</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    @Html.DropDownList(
+                "CategoryDropDown",
+                new SelectList(
+                    Model.Select(x => new { Value = x.CategoryName, Text = x.CategoryName }),
+                    "Value",
+                    "Text"
+                )
+            )
+</p>
+<table class="table" id="CategoryTable">
+    <tbody>
+
+    </tbody>
+</table>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        CategoryChange();
+    });
+
+    $('#CategoryDropDown').change(CategoryChange);
+
+    function CategoryChange() {
+        var selectedCategory = $('#CategoryDropDown').val();
+        //alert($(this).val());
+        var model = @Html.Raw(Json.Encode(Model));
+
+
+        var result = model.filter(function (category) {
+            return category.CategoryName === selectedCategory;
+        })[0];
+
+        var table = document.getElementById("CategoryTable");
+        var tableBody = document.createElement('TBODY');
+        
+        for (var i = 0; i < result.Subcategories.length; i++) {
+            var tr = document.createElement('TR');
+            var subcategoryNameTd = document.createElement('TD');
+            subcategoryNameTd.appendChild(document.createTextNode(result.Subcategories[i].Name));
+            tr.appendChild(subcategoryNameTd);
+
+            var links = document.createElement('TD');
+            tr.appendChild(links);
+
+            var editTd = document.createElement('TD');
+            var editLink = document.createElement("a");
+            editLink.innerText = "Edit";
+            editLink.href = "/RestaurantPaymentSystem/Subcategory/Edit/" + result.Subcategories[i].Name;
+            editTd.appendChild(editLink);
+            links.appendChild(editTd);
+
+            var spaceTd1 = document.createElement('TD');
+            spaceTd1.innerText = ' | ';
+            links.appendChild(spaceTd1);
+
+            var detailsTd = document.createElement('TD');
+            var detailsLink = document.createElement("a");
+            detailsLink.innerText = "Details";
+            detailsLink.href = "/RestaurantPaymentSystem/Subcategory/Details/" + result.Subcategories[i].Name;
+            detailsTd.appendChild(detailsLink);
+            links.appendChild(detailsTd);
+
+            var spaceTd2 = document.createElement('TD');
+            spaceTd2.innerText = ' | ';
+            links.appendChild(spaceTd2);
+
+            var deleteTd = document.createElement('TD');
+            var deleteLink = document.createElement("a");
+            deleteLink.innerText = "Delete";
+            deleteLink.href = "/RestaurantPaymentSystem/Subcategory/Delete/" + result.Subcategories[i].Name;
+            deleteTd.appendChild(deleteLink);
+            links.appendChild(deleteTd);
+
+            tableBody.appendChild(tr);
+        }
+
+        var oldTableBody = $("#CategoryTable tbody")[0];
+        table.replaceChild(tableBody, oldTableBody);
+    }
+</script>

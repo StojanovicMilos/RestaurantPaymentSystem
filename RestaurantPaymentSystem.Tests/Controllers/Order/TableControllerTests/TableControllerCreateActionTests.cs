@@ -1,7 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPaymentSystem.Controllers;
+using RestaurantPaymentSystem.Models;
 using RestaurantPaymentSystem.Tests.DB;
 
 namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
@@ -9,12 +12,25 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
     [TestClass]
     public class TableControllerCreateActionTests
     {
+        private TableController tableController;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.tableController = ControllerFactory.GetTableController();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            this.tableController.Dispose();
+        }
+
         [TestMethod]
-        public void TableControllerCreateTableGetActionRendersRightView()
+        public void TableControllerCreateActionGetActionRendersRightView()
         {
             //arrange
-            TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "create";
+            string viewName = "Create";
 
             //act
             ViewResult result = tableController.Create() as ViewResult;
@@ -25,13 +41,12 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         }
 
         [TestMethod]
-        public void TableControllerCreateTablePostModelStateInvalid()
+        public void TableControllerCreateActionPostModelStateInvalid()
         {
             //arrange
-            TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "create";
+            string viewName = "Create";
             tableController.ModelState.AddModelError("test", "test");
-            var table = Constants.table4;
+            var table = Constants.TablesNotInDatabase[0];
 
             //act
             ViewResult result = tableController.Create(table) as ViewResult;
@@ -42,16 +57,15 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         }
 
         [TestMethod]
-        public void TableControllerCreateTablePostModelStateValid()
+        public void TableControllerCreateActionPostModelStateValid()
         {
             //arrange
-            TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "alltables";
-            var table = Constants.table4;
+            string viewName = "AllTables";
+            var table = Constants.TablesNotInDatabase[0];
 
             //act
             ViewResult result = tableController.Create(table) as ViewResult;
-            var model = result.Model as ICollection;
+            var model = (result.ViewData.Model as IEnumerable<Table>).ToList();
             //assert
             Assert.IsNotNull(result);
             Assert.AreEqual(viewName, result.ViewName);

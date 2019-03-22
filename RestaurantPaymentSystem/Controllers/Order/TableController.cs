@@ -8,6 +8,13 @@ namespace RestaurantPaymentSystem.Controllers
     {
         IRestaurantPaymentSystemDB _db;
 
+        protected override void Dispose(bool disposing)
+        {
+            if (_db != null)
+                _db.Dispose();
+            base.Dispose(disposing);
+        }
+
         public TableController() : this(new EFRestaurantPaymentSystemDB())
         {
 
@@ -22,49 +29,54 @@ namespace RestaurantPaymentSystem.Controllers
         public ActionResult AllTables()
         {
             var model = _db.GetTables();
-            return View("alltables", model);
+            return View("AllTables", model);
         }
 
         // GET: Table/Details/5
         public ActionResult Details(int id)
         {
-            var model = _db.GetTableByID(id);
-            return View("details", model);
+            var model = _db.GetTable(id);
+            return View("Details", model);
         }
 
         // GET: Table/Create
         public ActionResult Create()
         {
-            return View("create");
+            return View("Create");
         }
 
         // POST: Table/Create
         [HttpPost]
-        public ActionResult Create(TableViewModel table)
+        public ActionResult Create(Table table)
         {
             if (!ModelState.IsValid)
             {
-                return View("create", table);
+                return View("Create", table);
             }
-            _db.CreateNewTable(table);
+            _db.SaveNewTable(table);
             return AllTables();
         }
 
         // GET: Table/Delete/5
         public ActionResult Delete(int id)
         {
-            return View("delete");
+            var model = _db.GetTable(id);
+            if (model != null)
+            {
+                return View("Delete", model);
+            }
+            return HttpNotFound();
         }
 
         // POST: Table/Delete/5
         [HttpPost]
-        public ActionResult Delete(TableViewModel table)
+        public ActionResult Delete(Table table)
         {
-            var tableExists = _db.GetTableByID(table.ID) != null;
+            var tableExists = _db.GetTable(table.Id) != null;
             var tableHasNoOrders = true; //TODO add logic later
             if (tableExists && tableHasNoOrders)
             {
-                _db.DeleteTable(table.ID);
+                _db.DeleteTable(table);
                 return AllTables();
             }
             return HttpNotFound();

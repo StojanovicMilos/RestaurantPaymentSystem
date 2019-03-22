@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPaymentSystem.Controllers;
+using RestaurantPaymentSystem.Models;
 using RestaurantPaymentSystem.Tests.DB;
 
 namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
@@ -16,11 +19,11 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         {
             //arrange
             TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "delete";
-            var table = Constants.tables[0];
+            string viewName = "Delete";
+            var table = Constants.TablesInDatabase[0];
 
             //act
-            ViewResult result = tableController.Delete(table.ID) as ViewResult;
+            ViewResult result = tableController.Delete(table.Id) as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -28,11 +31,26 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         }
 
         [TestMethod]
+        public void TableControllerDeleteActionGetActionTableNotFound()
+        {
+            //arrange
+            TableController tableController = ControllerFactory.GetTableController();
+            var table = Constants.TablesNotInDatabase[0];
+
+            //act
+            HttpNotFoundResult result = tableController.Delete(table.Id) as HttpNotFoundResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
+        }
+
+        [TestMethod]
         public void TableControllerDeleteTablePostTableDoesntExistInDatabase()
         {
             //arrange
             TableController tableController = ControllerFactory.GetTableController();
-            var table = Constants.table4;
+            var table = Constants.TablesNotInDatabase[0];
 
             //act
             var result = tableController.Delete(table) as HttpNotFoundResult;
@@ -46,12 +64,12 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         {
             //arrange
             TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "alltables";
-            var table = Constants.tables[0];
+            string viewName = "AllTables";
+            var table = Constants.TablesInDatabase[0];
 
             //act
             ViewResult result = tableController.Delete(table) as ViewResult;
-            var model = result.Model as ICollection;
+            var model = (result.ViewData.Model as IEnumerable<Table>).ToList();
             //assert
             Assert.IsNotNull(result);
             Assert.AreEqual(viewName, result.ViewName);

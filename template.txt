@@ -1,0 +1,63 @@
+[TestClass]
+    public class TableControllerCreateActionTests
+    {
+        private TableController tableController;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.tableController = ControllerFactory.GetTableController();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            this.tableController.Dispose();
+        }
+
+        [TestMethod]
+        public void TableControllerCreateActionGetActionRendersRightView()
+        {
+            //arrange
+            string viewName = "Create";
+
+            //act
+            ViewResult result = tableController.Create() as ViewResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+        }
+
+        [TestMethod]
+        public void TableControllerCreateActionPostModelStateInvalid()
+        {
+            //arrange
+            string viewName = "Create";
+            tableController.ModelState.AddModelError("test", "test");
+            var table = Constants.tablesNotInDatabase[0];
+
+            //act
+            ViewResult result = tableController.Create(table) as ViewResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+        }
+
+        [TestMethod]
+        public void TableControllerCreateActionPostModelStateValid()
+        {
+            //arrange
+            string viewName = "AllTables";
+            var table = Constants.tablesNotInDatabase[0];
+
+            //act
+            ViewResult result = tableController.Create(table) as ViewResult;
+            var model = (result.ViewData.Model as IEnumerable<TableModel>).ToList();
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+            CollectionAssert.Contains(model, table);
+        }
+    }

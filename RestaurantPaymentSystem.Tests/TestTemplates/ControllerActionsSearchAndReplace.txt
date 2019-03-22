@@ -1,0 +1,11 @@
+﻿Search and replace:
+ControllerClassName		CategoryController, SubcategoryController
+controllerName			_categoryController, _subcategoryController
+DefaultAction			AllCategories, AllSubcategories
+collectionInDatabase	CategoriesInDatabase, SubcategoriesInDatabase
+collectionNotInDatabase	CategoriesNotInDatabase, SubcategoriesNotInDatabase
+HasItems				HasCategories, HasSubcategories
+ItemExists				CategoryExists, SubcategoryExists
+ItemDoesntExist			CategoryDoesntExist, SubcategoryDoesntExist
+itemName				category, subcategory
+ModelClassName			CategoryModel, SubcategoryModel

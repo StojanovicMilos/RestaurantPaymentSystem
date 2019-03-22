@@ -89,20 +89,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Menu\CategoryControllerTests\CategoryControllerAllCategoriesActionTests.cs" />
+    <Compile Include="Controllers\Menu\CategoryControllerTests\CategoryControllerCreateActionTests.cs" />
+    <Compile Include="Controllers\Menu\CategoryControllerTests\CategoryControllerDeleteActionTests.cs" />
+    <Compile Include="Controllers\Menu\CategoryControllerTests\CategoryControllerDetailsActionTests.cs" />
+    <Compile Include="Controllers\Menu\CategoryControllerTests\CategoryControllerEditActionTests.cs" />
+    <Compile Include="Controllers\Menu\SubcategoryControllerTests\SubcategoryControllerCreateActionTests.cs" />
     <Compile Include="Controllers\Shared\ControllerFactory.cs" />
-    <Compile Include="Controllers\HomeControllerTests\HomeControllerAboutActionTests.cs" />
-    <Compile Include="Controllers\HomeControllerTests\HomeControllerContactActionTests.cs" />
-    <Compile Include="Controllers\TableControllerTests\TableControllerAllTablesActionTests.cs" />
-    <Compile Include="Controllers\TableControllerTests\TableControllerCreateActionTests.cs" />
-    <Compile Include="Controllers\TableControllerTests\TableControllerDeleteActionTests.cs" />
-    <Compile Include="Controllers\TableControllerTests\TableControllerDetailsActionTests.cs" />
+    <Compile Include="Controllers\Home\HomeControllerTests\HomeControllerAboutActionTests.cs" />
+    <Compile Include="Controllers\Home\HomeControllerTests\HomeControllerContactActionTests.cs" />
+    <Compile Include="Controllers\Menu\SubcategoryControllerTests\SubcategoryControllerAllSubcategoriesActionTests.cs" />
+    <Compile Include="Controllers\Order\TableControllerTests\TableControllerAllTablesActionTests.cs" />
+    <Compile Include="Controllers\Order\TableControllerTests\TableControllerCreateActionTests.cs" />
+    <Compile Include="Controllers\Order\TableControllerTests\TableControllerDeleteActionTests.cs" />
+    <Compile Include="Controllers\Order\TableControllerTests\TableControllerDetailsActionTests.cs" />
     <Compile Include="DB\Constants.cs" />
     <Compile Include="DB\InMemoryRestaurantPaymentSystemDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTests\HomeControllerIndexActionTests.cs" />
+    <Compile Include="Controllers\Home\HomeControllerTests\HomeControllerIndexActionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
+    <Content Include="TestTemplates\ControllerCreateActions.txt" />
+    <Content Include="TestTemplates\ControllerDefaultActions.txt" />
+    <Content Include="TestTemplates\ControllerActionsSearchAndReplace.txt" />
+    <Content Include="TestTemplates\ControllerDeleteActions.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

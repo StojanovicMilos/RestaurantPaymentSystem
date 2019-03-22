@@ -14,8 +14,8 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         {
             //arrange
             TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "details";
-            var tableID = Constants.tables[0].ID;
+            string viewName = "Details";
+            var tableID = Constants.TablesInDatabase[0].Id;
 
             //act
             ViewResult result = tableController.Details(tableID) as ViewResult;
@@ -30,11 +30,11 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         {
             //arrange
             TableController tableController = ControllerFactory.GetTableController();
-            var table = Constants.tables[0];
+            var table = Constants.TablesInDatabase[0];
 
             //act
-            ViewResult result = tableController.Details(table.ID) as ViewResult;
-            var model = result.Model as TableViewModel;
+            ViewResult result = tableController.Details(table.Id) as ViewResult;
+            var model = result.Model as Table;
             //assert
             Assert.IsNotNull(result);
             Assert.AreEqual(table, model);

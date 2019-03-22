@@ -1,0 +1,97 @@
+﻿	[TestClass]
+    public class ControllerClassNameDeleteActionTests
+    {
+		private ControllerClassName controllerName;
+
+		[TestInitialize]
+		public void TestInitialize()
+		{
+			this.controllerName = ControllerFactory.GetControllerClassName();
+		}
+
+		[TestCleanup]
+		public void TestCleanup()
+		{
+			this.controllerName.Dispose();
+		}
+
+        [TestMethod]
+        public void ControllerClassNameDeleteActionGetActionRendersRightView()
+        {
+            //arrange
+            string viewName = "Delete";
+            var itemName = Constants.collectionInDatabase[0];
+
+            //act
+            ViewResult result = controllerName.Delete(itemName.Id) as ViewResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+        }
+
+		[TestMethod]
+        public void ControllerClassNameDeleteActionGetActionItemExists()
+        {
+            //arrange
+            string viewName = "Delete";
+            var category = Constants.collectionInDatabase[0];
+
+            //act
+            ViewResult result = controllerName.Delete(category.Id) as ViewResult;
+            var model = result.ViewData.Model as CategoryModel;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+            Assert.AreEqual(model, category);
+        }
+
+		[TestMethod]
+        public void ControllerClassNameDeleteActionGetActionItemDoesNotExist()
+        {
+            //arrange
+            var category = Constants.collectionNotInDatabase[0];
+
+            //act
+            HttpNotFoundResult result = controllerName.Delete(category.Id) as HttpNotFoundResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
+        }
+
+
+
+		[TestMethod]
+        public void ControllerClassNameDeleteActionPostItemExists()
+        {
+            //arrange
+            string viewName = "AllCategories";
+            var category = Constants.collectionInDatabase[0];
+
+            //act
+            ViewResult result = controllerName.Delete(category) as ViewResult;
+            var model = (result.ViewData.Model as IEnumerable<CategoryModel>).ToList();
+            
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+            CollectionAssert.DoesNotContain(model, category);
+        }
+
+        [TestMethod]
+        public void ControllerClassNameDeleteActionPostCategoryDoesntExist()
+        {
+            //arrange
+            string viewName = "AllCategories";
+            var category = Constants.collectionNotInDatabase[0];
+
+            //act
+            ViewResult result = controllerName.DeleteConfirmed(category.Id) as ViewResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+        }
+	}
