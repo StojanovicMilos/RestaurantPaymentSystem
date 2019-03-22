@@ -10,18 +10,18 @@ namespace RestaurantPaymentSystem.Tests.Controllers
     {
         public static TableController GetTableController()
         {
-            return new TableController(new InMemoryRestaurantPaymentSystemDB());
+            return new TableController(new InMemoryRestaurantPaymentSystemDb());
         }
 
         public static CategoryController GetCategoryController()
         {
             //TODO UNDO!!! ???
-            return new CategoryController(new InMemoryRestaurantPaymentSystemDB());
+            return new CategoryController(new InMemoryRestaurantPaymentSystemDb());
         }
 
         public static SubcategoryController GetSubcategoryController()
         {
-            return new SubcategoryController(new InMemoryRestaurantPaymentSystemDB());
+            return new SubcategoryController(new InMemoryRestaurantPaymentSystemDb());
         }
     }
 }

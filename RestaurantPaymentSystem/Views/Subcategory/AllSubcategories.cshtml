@@ -49,7 +49,7 @@
         for (var i = 0; i < result.Subcategories.length; i++) {
             var tr = document.createElement('TR');
             var subcategoryNameTd = document.createElement('TD');
-            subcategoryNameTd.appendChild(document.createTextNode(result.Subcategories[i].Name));
+            subcategoryNameTd.appendChild(document.createTextNode(result.Subcategories[i].SubcategoryName));
             tr.appendChild(subcategoryNameTd);
 
             var links = document.createElement('TD');
@@ -58,7 +58,7 @@
             var editTd = document.createElement('TD');
             var editLink = document.createElement("a");
             editLink.innerText = "Edit";
-            editLink.href = "/RestaurantPaymentSystem/Subcategory/Edit/" + result.Subcategories[i].Name;
+            editLink.href = "/RestaurantPaymentSystem/Subcategory/Edit/" + result.Subcategories[i].SubcategoryName;
             editTd.appendChild(editLink);
             links.appendChild(editTd);
 
@@ -69,7 +69,7 @@
             var detailsTd = document.createElement('TD');
             var detailsLink = document.createElement("a");
             detailsLink.innerText = "Details";
-            detailsLink.href = "/RestaurantPaymentSystem/Subcategory/Details/" + result.Subcategories[i].Name;
+            detailsLink.href = "/RestaurantPaymentSystem/Subcategory/Details/" + result.Subcategories[i].SubcategoryName;
             detailsTd.appendChild(detailsLink);
             links.appendChild(detailsTd);
 
@@ -80,7 +80,7 @@
             var deleteTd = document.createElement('TD');
             var deleteLink = document.createElement("a");
             deleteLink.innerText = "Delete";
-            deleteLink.href = "/RestaurantPaymentSystem/Subcategory/Delete/" + result.Subcategories[i].Name;
+            deleteLink.href = "/RestaurantPaymentSystem/Subcategory/Delete/" + result.Subcategories[i].SubcategoryName;
             deleteTd.appendChild(deleteLink);
             links.appendChild(deleteTd);
 

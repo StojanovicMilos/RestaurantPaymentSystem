@@ -15,7 +15,7 @@ namespace RestaurantPaymentSystem.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
-        //TODO FIX
+        //TODO ??? FIX
         protected override void Seed(EFRestaurantPaymentSystemDB context)
         {
             //TakeDownTables(context);

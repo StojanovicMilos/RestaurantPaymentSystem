@@ -6,31 +6,22 @@ using System.Linq;
 
 namespace RestaurantPaymentSystem.Tests.DB
 {
-    class InMemoryRestaurantPaymentSystemDB : IRestaurantPaymentSystemDB
+    class InMemoryRestaurantPaymentSystemDb : IRestaurantPaymentSystemDB
     {
-        private List<Table> _tables;
-        private List<Category> _categories;
-        private List<Subcategory> _subcategories;
+        private readonly List<Table> _tables;
+        private readonly List<Category> _categories;
+        private readonly List<Subcategory> _subcategories;
 
-        public InMemoryRestaurantPaymentSystemDB()
+        public InMemoryRestaurantPaymentSystemDb()
         {
             _tables = new List<Table>();
-            foreach(Table table in Constants.TablesInDatabase)
-            {
-                _tables.Add(table);
-            }
+            _tables.AddRange(Constants.TablesInDatabase);
 
             _categories = new List<Category>();
-            foreach(Category category in Constants.CategoriesInDatabase)
-            {
-                _categories.Add(category);
-            }
+            _categories.AddRange(Constants.CategoriesInDatabase);
 
             _subcategories = new List<Subcategory>();
-            foreach (Subcategory subcategory in Constants.SubcategoriesInDatabase)
-            {
-                _subcategories.Add(subcategory);
-            }
+            _subcategories.AddRange(Constants.SubcategoriesInDatabase);
         }
 
         public Exception ExceptionToThrow { get; set; }
