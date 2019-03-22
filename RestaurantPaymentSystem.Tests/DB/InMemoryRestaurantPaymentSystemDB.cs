@@ -50,6 +50,8 @@ namespace RestaurantPaymentSystem.Tests.DB
 
         public void SaveNewSubcategory(Subcategory subcategory)
         {
+            var category = GetCategory(subcategory.CategoryId);
+            category.Subcategories.Add(subcategory);
             _subcategories.Add(subcategory);
         }
 

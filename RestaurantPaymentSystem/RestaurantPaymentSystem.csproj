@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201903220732331_AddNewTablesInDb.Designer.cs">
       <DependentUpon>201903220732331_AddNewTablesInDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903221324417_AddCategoryIdToSubcategory.cs" />
+    <Compile Include="Migrations\201903221324417_AddCategoryIdToSubcategory.Designer.cs">
+      <DependentUpon>201903221324417_AddCategoryIdToSubcategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -336,6 +340,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\_Subcategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -356,6 +361,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903220732331_AddNewTablesInDb.resx">
       <DependentUpon>201903220732331_AddNewTablesInDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221324417_AddCategoryIdToSubcategory.resx">
+      <DependentUpon>201903221324417_AddCategoryIdToSubcategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

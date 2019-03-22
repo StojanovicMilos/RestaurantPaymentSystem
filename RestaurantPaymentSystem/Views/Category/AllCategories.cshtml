@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<RestaurantPaymentSystem.Models.Category>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
+<br />
+<br />
+<h2>All Categories</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -19,15 +17,15 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @item.CategoryName
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @item.CategoryName
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
     }
 </table>

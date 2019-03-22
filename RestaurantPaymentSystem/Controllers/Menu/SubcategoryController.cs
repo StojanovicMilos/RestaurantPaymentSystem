@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using RestaurantPaymentSystem.DB;
 using RestaurantPaymentSystem.Models;
@@ -33,8 +32,19 @@ namespace RestaurantPaymentSystem.Controllers.Menu
             return View("AllSubcategories", model);
         }
 
+        public ActionResult GetAllSubcategoriesForCategory(int categoryId)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var model = _db.GetCategory(categoryId);
+                return PartialView("_Subcategories", model);
+            }
+
+            return null;//TODO ??? fix
+        }
+
         // GET: Subcategory/Create
-        public ActionResult Create()
+        public ActionResult Create(int categoryId)
         {
             return View("Create");
         }

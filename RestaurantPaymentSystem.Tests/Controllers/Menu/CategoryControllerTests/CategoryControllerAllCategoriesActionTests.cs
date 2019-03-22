@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RestaurantPaymentSystem.Controllers;
 using RestaurantPaymentSystem.Controllers.Menu;
 using RestaurantPaymentSystem.Models;
 using RestaurantPaymentSystem.Tests.DB;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.CategoryControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
 {
 
 	[TestClass]
@@ -19,20 +18,20 @@ namespace RestaurantPaymentSystem.Tests.Controllers.CategoryControllerTests
         [TestInitialize]
         public void TestInitialize()
         {
-            this._categoryController = ControllerFactory.GetCategoryController();
+            _categoryController = ControllerFactory.GetCategoryController();
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            this._categoryController.Dispose();
+            _categoryController.Dispose();
         }
 
         [TestMethod]
         public void CategoryControllerAllCategoriesActionRendersRightView()
         {
             //arrange
-            string viewName = "AllCategories";
+            const string viewName = "AllCategories";
 
             //act
             ViewResult result = _categoryController.AllCategories() as ViewResult;
@@ -54,6 +53,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.CategoryControllerTests
             ViewResult result = _categoryController.AllCategories() as ViewResult;
 
             //assert
+            Debug.Assert(result != null, nameof(result) + " != null");
             var model = (result.ViewData.Model as IEnumerable<Category>).ToList();
             CollectionAssert.Contains(model, category0);
             CollectionAssert.Contains(model, category1);

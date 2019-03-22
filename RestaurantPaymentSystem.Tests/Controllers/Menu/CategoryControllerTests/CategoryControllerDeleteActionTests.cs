@@ -1,27 +1,35 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RestaurantPaymentSystem.Controllers;
-using RestaurantPaymentSystem.Models;
-using RestaurantPaymentSystem.Tests.DB;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPaymentSystem.Controllers.Menu;
+using RestaurantPaymentSystem.Models;
+using RestaurantPaymentSystem.Tests.DB;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.CategoryControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
 {
+    
     [TestClass]
     public class CategoryControllerDeleteActionTests
     {
+        private CategoryController _categoryController;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _categoryController = ControllerFactory.GetCategoryController();
+        }
+
         [TestMethod]
         public void CategoryControllerDeleteActionGetActionRendersRightView()
         {
             //arrange
-            CategoryController categoryController = ControllerFactory.GetCategoryController();
-            string viewName = "Delete";
+            const string viewName = "Delete";
             var category = Constants.CategoriesInDatabase[0];
 
             //act
-            ViewResult result = categoryController.Delete(category.Id) as ViewResult;
+            ViewResult result = _categoryController.Delete(category.Id) as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -32,16 +40,15 @@ namespace RestaurantPaymentSystem.Tests.Controllers.CategoryControllerTests
         public void CategoryControllerDeleteCategoryGetCategoryExists()
         {
             //arrange
-            CategoryController categoryController = ControllerFactory.GetCategoryController();
-            string viewName = "Delete";
+            const string viewName = "Delete";
             var category = Constants.CategoriesInDatabase[0];
 
             //act
-            ViewResult result = categoryController.Delete(category.Id) as ViewResult;
-            var model = result.ViewData.Model as Category;
-
-            //assert
+            ViewResult result = _categoryController.Delete(category.Id) as ViewResult;
             Assert.IsNotNull(result);
+            var model = result.ViewData.Model as Category;
+            
+            //assert
             Assert.AreEqual(viewName, result.ViewName);
             Assert.AreEqual(model, category);
         }
@@ -50,11 +57,10 @@ namespace RestaurantPaymentSystem.Tests.Controllers.CategoryControllerTests
         public void CategoryControllerDeleteActionGetActionCategoryDoesNotExist()
         {
             //arrange
-            CategoryController categoryController = ControllerFactory.GetCategoryController();
             var category = Constants.CategoriesNotInDatabase[0];
 
             //act
-            HttpNotFoundResult result = categoryController.Delete(category.Id) as HttpNotFoundResult;
+            HttpNotFoundResult result = _categoryController.Delete(category.Id) as HttpNotFoundResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -67,16 +73,15 @@ namespace RestaurantPaymentSystem.Tests.Controllers.CategoryControllerTests
         public void CategoryControllerDeleteActionPostCategoryExists()
         {
             //arrange
-            CategoryController categoryController = ControllerFactory.GetCategoryController();
-            string viewName = "AllCategories";
-            var category = Constants.CategoriesInDatabase[0];
+            const string viewName = "AllCategories";
+            var category = Constants.CategoriesInDatabase[1];
 
             //act
-            ViewResult result = categoryController.DeleteConfirmed(category.Id) as ViewResult;
+            ViewResult result = _categoryController.DeleteConfirmed(category.Id) as ViewResult;
+            Assert.IsNotNull(result);
             var model = (result.ViewData.Model as IEnumerable<Category>).ToList();
             
             //assert
-            Assert.IsNotNull(result);
             Assert.AreEqual(viewName, result.ViewName);
             CollectionAssert.DoesNotContain(model, category);
         }
@@ -85,11 +90,10 @@ namespace RestaurantPaymentSystem.Tests.Controllers.CategoryControllerTests
         public void CategoryControllerDeleteActionPostCategoryDoesntExist()
         {
             //arrange
-            CategoryController categoryController = ControllerFactory.GetCategoryController();
             var category = Constants.CategoriesNotInDatabase[0];
 
             //act
-            var result = categoryController.DeleteConfirmed(category.Id) as HttpNotFoundResult;
+            var result = _categoryController.DeleteConfirmed(category.Id) as HttpNotFoundResult;
 
             //assert
             Assert.IsNotNull(result);

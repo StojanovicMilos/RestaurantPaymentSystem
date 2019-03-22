@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -29,7 +30,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
         public void CategoryControllerCreateActionGetActionRendersRightView()
         {
             //arrange
-            string viewName = "Create";
+            const string viewName = "Create";
 
             //act
             ViewResult result = _categoryController.Create() as ViewResult;
@@ -43,7 +44,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
         public void CategoryControllerCreateActionPostModelStateInvalid()
         {
             //arrange
-            string viewName = "Create";
+            const string viewName = "Create";
             _categoryController.ModelState.AddModelError("test", "test");
             var category = Constants.CategoriesNotInDatabase[0];
 
@@ -59,7 +60,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
         public void CategoryControllerCreateActionPostModelStateValid()
         {
             //arrange
-            string viewName = "AllCategories";
+            const string viewName = "AllCategories";
             var category = Constants.CategoriesNotInDatabase[0];
 
             //act

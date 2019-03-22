@@ -33,10 +33,11 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTe
         public void SubcategoryControllerCreateActionGetActionRendersRightView()
         {
             //arrange
-            string viewName = "Create";
+            const string viewName = "Create";
+            const int categoryId = 1;
 
             //act
-            ViewResult result = _subcategoryController.Create() as ViewResult;
+            ViewResult result = _subcategoryController.Create(categoryId) as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -47,7 +48,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTe
         public void SubcategoryControllerCreateActionPostModelStateInvalid()
         {
             //arrange
-            string viewName = "Create";
+            const string viewName = "Create";
             _subcategoryController.ModelState.AddModelError("test", "test");
             var subcategoryModel = Constants.SubcategoriesNotInDatabase[0];
 
@@ -72,10 +73,10 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTe
             //assert
             Assert.IsNotNull(result);
             var model = (result.ViewData.Model as IEnumerable<Category>).ToList();
-            var allSubcategories = (ICollection) model.SelectMany(c => c.Subcategories);
+            var allSubcategories = model.SelectMany(c => c.Subcategories);
 
             Assert.AreEqual(viewName, result.ViewName);
-            CollectionAssert.Contains(allSubcategories, subcategoryModel);
+            Assert.IsTrue(allSubcategories.Contains(subcategoryModel));
         }
     }
 }
