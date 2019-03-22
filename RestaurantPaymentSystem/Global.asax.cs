@@ -14,7 +14,7 @@ namespace RestaurantPaymentSystem
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer<EFRestaurantPaymentSystemDB>(new DropCreateDatabaseIfModelChanges<EFRestaurantPaymentSystemDB>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EFRestaurantPaymentSystemDB>());
         }
     }
 }

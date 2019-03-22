@@ -15,16 +15,14 @@ namespace RestaurantPaymentSystem.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
+        //TODO FIX
         protected override void Seed(EFRestaurantPaymentSystemDB context)
         {
-            System.Diagnostics.Debugger.Launch();
             //TakeDownTables(context);
             SeedTables(context);
             //TakeDownMenu(context);
             SeedMenu(context);
         }
-
-        //TODO FIX
 
         private void TakeDownTables(EFRestaurantPaymentSystemDB context)
         {
@@ -52,10 +50,8 @@ namespace RestaurantPaymentSystem.Migrations
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
             //  This method will be called after migrating to the latest version.
-            foreach (var item in context.Subcategories)
-            {
-                context.Subcategories.RemoveRange(context.Subcategories);
-            }
+
+            context.Subcategories.RemoveRange(context.Subcategories);
 
             foreach (var category in context.Categories)
             {
@@ -65,11 +61,12 @@ namespace RestaurantPaymentSystem.Migrations
                     {
                         subcategory.Items.RemoveAll(i => true);
                     }
+
                     category.Subcategories.RemoveAll(s => true);
                 }
             }
+
             context.Categories.RemoveRange(context.Categories);
-            context.SaveChanges();
         }
 
         private static void SeedMenu(EFRestaurantPaymentSystemDB context)
