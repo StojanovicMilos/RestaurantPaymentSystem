@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RestaurantPaymentSystem.DB
 {
-    public interface IRestaurantPaymentSystemDB : IDisposable
+    public interface IRestaurantPaymentSystemDb : IDisposable
     {
         IQueryable<Table> GetTables();
         Table GetTable(int id);
@@ -17,6 +17,7 @@ namespace RestaurantPaymentSystem.DB
         void SaveExistingCategory(Category existingCategory, Category category);
         void DeleteCategory(Category category);
 
+        Subcategory GetSubcategory(int id);
         void SaveNewSubcategory(Subcategory model);
         void SaveExistingSubcategory(Subcategory existingSubcategory, Subcategory subcategory);
         void DeleteSubcategory(Subcategory subcategory);

@@ -7,7 +7,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
 {
     public class SubcategoryController : Controller
     {
-        readonly IRestaurantPaymentSystemDB _db;
+        readonly IRestaurantPaymentSystemDb _db;
 
         protected override void Dispose(bool disposing)
         {
@@ -20,7 +20,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
 
         }
 
-        public SubcategoryController(IRestaurantPaymentSystemDB db)
+        public SubcategoryController(IRestaurantPaymentSystemDb db)
         {
             _db = db;
         }
@@ -59,6 +59,40 @@ namespace RestaurantPaymentSystem.Controllers.Menu
                 return AllSubcategories();
             }
             return View("Create");
+        }
+
+        // GET: Subcategory/Delete/5
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var model = _db.GetSubcategory(id);
+            if (model != null)
+            {
+                return View("Delete", model);
+            }
+            return HttpNotFound();
+        }
+
+        //??? TODO take a look at authorize action filter
+
+        // POST: Subcategory/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Subcategory existingSubcategory = _db.GetSubcategory(id);
+            var subcategoryExists = existingSubcategory != null;
+            if (subcategoryExists)
+            {
+                var subcategoryHasNoSubcategories = existingSubcategory.Items == null || existingSubcategory.Items.Count == 0;
+                if (subcategoryHasNoSubcategories)
+                {
+                    _db.DeleteSubcategory(existingSubcategory);
+                    return AllSubcategories();
+                }
+            }
+            ModelState.AddModelError("", "Category cannot be deleted because it has subcategories. Please delete all subcategories first.");
+            return Delete(id);
         }
     }
 }

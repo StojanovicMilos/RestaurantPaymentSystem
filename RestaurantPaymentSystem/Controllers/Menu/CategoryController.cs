@@ -8,7 +8,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
     //TODO change all return AllCategories(); to redirecttoaction
     public class CategoryController : Controller
     {
-        private readonly IRestaurantPaymentSystemDB _db;
+        private readonly IRestaurantPaymentSystemDb _db;
 
         protected override void Dispose(bool disposing)
         {
@@ -21,7 +21,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
 
         }
 
-        public CategoryController(IRestaurantPaymentSystemDB db)
+        public CategoryController(IRestaurantPaymentSystemDb db)
         {
             _db = db;
         }

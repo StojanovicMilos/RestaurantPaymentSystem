@@ -6,7 +6,7 @@ namespace RestaurantPaymentSystem.Controllers
 {
     public class TableController : Controller
     {
-        IRestaurantPaymentSystemDB _db;
+        IRestaurantPaymentSystemDb _db;
 
         protected override void Dispose(bool disposing)
         {
@@ -20,7 +20,7 @@ namespace RestaurantPaymentSystem.Controllers
 
         }
 
-        public TableController(IRestaurantPaymentSystemDB db)
+        public TableController(IRestaurantPaymentSystemDb db)
         {
             _db = db;
         }

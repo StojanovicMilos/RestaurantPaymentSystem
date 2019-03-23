@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using RestaurantPaymentSystem.Models;
+﻿using RestaurantPaymentSystem.Models;
 using System.Data.Entity;
 using System.Linq;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace RestaurantPaymentSystem.DB
 {
-    public class EFRestaurantPaymentSystemDB : DbContext, IRestaurantPaymentSystemDB
+    public class EFRestaurantPaymentSystemDB : DbContext, IRestaurantPaymentSystemDb
     {
         public DbSet<Table> Tables { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -57,20 +55,11 @@ namespace RestaurantPaymentSystem.DB
             SaveChanges();
         }
 
-        public Table GetTable(int id)
-        {
-            return Tables.Find(id);
-        }
+        public Table GetTable(int id) => Tables.Find(id);
 
-        public IQueryable<Table> GetTables()
-        {
-            return Tables.AsQueryable();
-        }
+        public IQueryable<Table> GetTables() => Tables.AsQueryable();
 
-        public IQueryable<Category> GetCategories()
-        {
-            return Categories.AsQueryable();
-        }
+        public IQueryable<Category> GetCategories() => Categories.AsQueryable();
 
         public void SaveNewCategory(Category category)
         {
@@ -85,16 +74,15 @@ namespace RestaurantPaymentSystem.DB
             SaveChanges();
         }
 
-        public Category GetCategory(int id)
-        {
-            return Categories.Find(id);
-        }
+        public Category GetCategory(int id) => Categories.Find(id);
 
         public void DeleteCategory(Category category)
         {
             Categories.Remove(category);
             SaveChanges();
         }
+
+        public Subcategory GetSubcategory(int id) => Subcategories.Find(id);
 
         public void SaveNewSubcategory(Subcategory model)
         {

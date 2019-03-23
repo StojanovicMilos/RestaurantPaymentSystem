@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RestaurantPaymentSystem.Tests.DB
 {
-    class InMemoryRestaurantPaymentSystemDb : IRestaurantPaymentSystemDB
+    class InMemoryRestaurantPaymentSystemDb : IRestaurantPaymentSystemDb
     {
         private readonly List<Table> _tables;
         private readonly List<Category> _categories;
@@ -26,15 +26,9 @@ namespace RestaurantPaymentSystem.Tests.DB
 
         public Exception ExceptionToThrow { get; set; }
 
-        public void SaveNewCategory(Category category)
-        {
-            _categories.Add(category);
-        }
+        public void SaveNewCategory(Category category) => _categories.Add(category);
 
-        public void SaveExistingCategory(Category existingCategory, Category category)
-        {
-            CategoryMappers.MapNewModelToExistingModel(category, existingCategory);
-        }
+        public void SaveExistingCategory(Category existingCategory, Category category) => CategoryMappers.MapNewModelToExistingModel(category, existingCategory);
 
         public void SaveNewTable(Table table)
         {
@@ -43,10 +37,9 @@ namespace RestaurantPaymentSystem.Tests.DB
             _tables.Add(table);
         }
 
-        public void DeleteCategory(Category category)
-        {
-            _categories.Remove(category);
-        }
+        public void DeleteCategory(Category category) => _categories.Remove(category);
+
+        public Subcategory GetSubcategory(int id) => _subcategories.Find(s => s.Id == id);
 
         public void SaveNewSubcategory(Subcategory subcategory)
         {
@@ -55,44 +48,23 @@ namespace RestaurantPaymentSystem.Tests.DB
             _subcategories.Add(subcategory);
         }
 
-        public void SaveExistingSubcategory(Subcategory existingSubcategory, Subcategory subcategory)
-        {
-            SubcategoryMappers.MapNewModelToExistingModel(subcategory, existingSubcategory);
-        }
+        public void SaveExistingSubcategory(Subcategory existingSubcategory, Subcategory subcategory) => SubcategoryMappers.MapNewModelToExistingModel(subcategory, existingSubcategory);
 
-        public void DeleteSubcategory(Subcategory subcategory)
-        {
-            _subcategories.Remove(subcategory);
-        }
+        public void DeleteSubcategory(Subcategory subcategory) => _subcategories.Remove(subcategory);
 
-        public void DeleteTable(Table table)
-        {
-            _tables.Remove(table);
-        }
+        public void DeleteTable(Table table) => _tables.Remove(table);
 
         public void Dispose()
         {
 
         }
 
-        public IQueryable<Category> GetCategories()
-        {
-            return _categories.AsQueryable();
-        }
+        public IQueryable<Category> GetCategories() => _categories.AsQueryable();
 
-        public Category GetCategory(int id)
-        {
-            return _categories.Find(c => c.Id == id);
-        }
+        public Category GetCategory(int id) => _categories.Find(c => c.Id == id);
 
-        public Table GetTable(int id)
-        {
-            return _tables.Find(t => t.Id == id);
-        }
+        public Table GetTable(int id) => _tables.Find(t => t.Id == id);
 
-        IQueryable<Table> IRestaurantPaymentSystemDB.GetTables()
-        {
-            return _tables.AsQueryable();
-        }
+        IQueryable<Table> IRestaurantPaymentSystemDb.GetTables() => _tables.AsQueryable();
     }
 }
