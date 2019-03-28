@@ -94,5 +94,45 @@ namespace RestaurantPaymentSystem.Controllers.Menu
             ModelState.AddModelError("", "Category cannot be deleted because it has subcategories. Please delete all subcategories first.");
             return Delete(id);
         }
+
+        // GET: Subcategory/Details/5
+        public ActionResult Details(int id)
+        {
+            var model = _db.GetSubcategory(id);
+            if (model != null)
+            {
+                return View("Details", model);
+            }
+            return HttpNotFound();
+        }
+
+        // GET: Subcategory/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var model = _db.GetSubcategory(id);
+            if (model != null)
+            {
+                return View("Edit", model);
+            }
+            return HttpNotFound();
+        }
+
+        // POST: Subcategory/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Subcategory model)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingSubcategory = _db.GetSubcategory(model.Id);
+                var subcategoryExists = existingSubcategory != null;
+                if (subcategoryExists)
+                {
+                    _db.SaveExistingSubcategory(existingSubcategory, model);
+                }
+                return AllSubcategories();
+            }
+            return View("Edit");
+        }
     }
 }

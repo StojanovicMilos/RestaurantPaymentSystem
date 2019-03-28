@@ -94,6 +94,8 @@
     <Compile Include="Controllers\Menu\CategoryControllerTests\CategoryControllerDeleteActionTests.cs" />
     <Compile Include="Controllers\Menu\CategoryControllerTests\CategoryControllerDetailsActionTests.cs" />
     <Compile Include="Controllers\Menu\CategoryControllerTests\CategoryControllerEditActionTests.cs" />
+    <Compile Include="Controllers\Menu\SubcategoryControllerTests\SubcategoryControllerEditActionTests.cs" />
+    <Compile Include="Controllers\Menu\SubcategoryControllerTests\SubcategoryControllerDetailsActionTests.cs" />
     <Compile Include="Controllers\Menu\SubcategoryControllerTests\SubcategoryControllerCreateActionTests.cs" />
     <Compile Include="Controllers\Menu\SubcategoryControllerTests\SubcategoryControllerDeleteActionTests.cs" />
     <Compile Include="Controllers\Shared\ControllerFactory.cs" />
