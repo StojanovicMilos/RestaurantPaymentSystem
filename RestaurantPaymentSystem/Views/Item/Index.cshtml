@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<RestaurantPaymentSystem.Models.Item>
 
 @{
-    ViewBag.Title = "ItemsTest";
+    ViewBag.Title = "Index";
 }
 
-<h2>ItemsTest</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.ItemName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Price)
@@ -23,7 +23,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.ItemName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)

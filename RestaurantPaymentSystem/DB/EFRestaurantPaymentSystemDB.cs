@@ -10,7 +10,8 @@ namespace RestaurantPaymentSystem.DB
         public DbSet<Table> Tables { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
-
+        public DbSet<Item> Items { get; set; }
+        
         //private StreamReader _reader;
         //private StreamWriter _writer;
         private string _previousLog = string.Empty;
@@ -99,6 +100,25 @@ namespace RestaurantPaymentSystem.DB
         public void DeleteSubcategory(Subcategory subcategory)
         {
             Subcategories.Remove(subcategory);
+            SaveChanges();
+        }
+
+        public Item GetItem(int id) => Items.Find(id);
+
+        public void SaveNewItem(Item item)
+        {
+            Items.Add(item);
+        }
+
+        public void SaveExistingItem(Item existingItem, Item item)
+        {
+            ItemMappers.MapNewModelToExistingModel(existingItem, item);
+            SaveChanges();
+        }
+
+        public void DeleteItem(Item item)
+        {
+            Items.Remove(item);
             SaveChanges();
         }
     }

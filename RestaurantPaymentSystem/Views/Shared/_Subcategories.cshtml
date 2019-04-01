@@ -1,23 +1,17 @@
-﻿@model RestaurantPaymentSystem.Models.Category
+﻿@model IEnumerable<RestaurantPaymentSystem.Models.Subcategory>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Subcategories[0].SubcategoryName)
-        </th>
-        <th>
-            @Html.HiddenFor(model => model.Subcategories[0].CategoryId)
+            @Html.DisplayNameFor(model => model.SubcategoryName)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model.Subcategories) {
+@foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.SubcategoryName)
-        </td>
-        <td>
-            @Html.HiddenFor(modelItem => item.CategoryId)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", "Subcategory", new { id=item.Id }, null) |
@@ -30,5 +24,5 @@
 </table>
 
 <p>
-    @Html.ActionLink("Create New Subcategory", "Create", "Subcategory", new { categoryId = Model.Id }, null)
+    @Html.ActionLink("Create New Subcategory", "Create", "Subcategory", new { categoryId = Model.First().CategoryId }, null)
 </p>

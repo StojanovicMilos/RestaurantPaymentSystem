@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,33 +8,34 @@ using RestaurantPaymentSystem.Models;
 using RestaurantPaymentSystem.Tests.Controllers.Shared;
 using RestaurantPaymentSystem.Tests.DB;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Menu.ItemControllerTests
 {
+
 	[TestClass]
-    public class SubcategoryControllerAllSubcategoriesActionTests
+    public class ItemControllerAllItemsActionTests
     {
-        private SubcategoryController _subcategoryController;
+        private ItemController _controller;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _subcategoryController = ControllerFactory.GetSubcategoryController();
+            _controller = ControllerFactory.GetItemController();
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            _subcategoryController.Dispose();
+            _controller.Dispose();
         }
 
         [TestMethod]
-        public void SubcategoryControllerAllSubcategoriesActionRendersRightView()
+        public void ItemControllerAllItemsActionRendersRightView()
         {
             //arrange
-            string viewName = "AllSubcategories";
+            const string viewName = "AllItems";
 
             //act
-            ViewResult result = _subcategoryController.AllSubcategories() as ViewResult;
+            ViewResult result = _controller.AllItems() as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -41,7 +43,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTe
         }
 
         [TestMethod]
-        public void SubcategoryControllerAllSubcategoriesActionHasCategories()
+        public void ItemControllerAllItemsActionHasCategories()
         {
             //arrange
             var category0 = Constants.CategoriesInDatabase[0];
@@ -49,11 +51,10 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTe
             var category2 = Constants.CategoriesInDatabase[2];
 
             //act
-            ViewResult result = _subcategoryController.AllSubcategories() as ViewResult;
+            ViewResult result = _controller.AllItems() as ViewResult;
 
             //assert
-
-            Assert.IsNotNull(result);
+            Debug.Assert(result != null, nameof(result) + " != null");
             var model = (result.ViewData.Model as IEnumerable<Category>).ToList();
             CollectionAssert.Contains(model, category0);
             CollectionAssert.Contains(model, category1);

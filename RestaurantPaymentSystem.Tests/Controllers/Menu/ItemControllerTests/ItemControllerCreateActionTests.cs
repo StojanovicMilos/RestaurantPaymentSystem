@@ -7,33 +7,34 @@ using RestaurantPaymentSystem.Models;
 using RestaurantPaymentSystem.Tests.Controllers.Shared;
 using RestaurantPaymentSystem.Tests.DB;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Menu.ItemControllerTests
 {
-	[TestClass]
-    public class CategoryControllerCreateActionTests
+    [TestClass]
+    public class ItemControllerCreateActionTests
     {
-        private CategoryController _categoryController;
+        private ItemController _controller;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _categoryController = ControllerFactory.GetCategoryController();
+            _controller = ControllerFactory.GetItemController();
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            _categoryController.Dispose();
+            _controller.Dispose();
         }
 
         [TestMethod]
-        public void CategoryControllerCreateActionGetActionRendersRightView()
+        public void ItemControllerCreateActionGetActionRendersRightView()
         {
             //arrange
             const string viewName = "Create";
+            const int subcategoryId = 1;
 
             //act
-            ViewResult result = _categoryController.Create() as ViewResult;
+            ViewResult result = _controller.Create(subcategoryId) as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -41,15 +42,15 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
         }
 
         [TestMethod]
-        public void CategoryControllerCreateActionPostModelStateInvalid()
+        public void ItemControllerCreateActionPostModelStateInvalid()
         {
             //arrange
             const string viewName = "Create";
-            _categoryController.ModelState.AddModelError("test", "test");
-            var category = Constants.CategoriesNotInDatabase[0];
+            _controller.ModelState.AddModelError("test", "test");
+            var item = Constants.ItemsNotInDatabase[0];
 
             //act
-            ViewResult result = _categoryController.Create(category) as ViewResult;
+            ViewResult result = _controller.Create(item) as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -57,21 +58,23 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
         }
 
         [TestMethod]
-        public void CategoryControllerCreateActionPostModelStateValid()
+        public void ItemControllerCreateActionPostModelStateValid()
         {
             //arrange
-            const string viewName = "AllCategories";
-            var category = Constants.CategoriesNotInDatabase[0];
+            const string viewName = "AllItems";
+            var item = Constants.ItemsNotInDatabase[0];
 
             //act
-            ViewResult result = _categoryController.Create(category) as ViewResult;
-            
+            ViewResult result = _controller.Create(item) as ViewResult;
+
             //assert
             Assert.IsNotNull(result);
             var model = (result.ViewData.Model as IEnumerable<Category>).ToList();
+            var allItems = model.SelectMany(c => c.Subcategories).SelectMany(s => s.Items).ToList();
+
             Assert.IsNotNull(result);
             Assert.AreEqual(viewName, result.ViewName);
-            CollectionAssert.Contains(model, category);
+            CollectionAssert.Contains(allItems, item);
         }
     }
 }

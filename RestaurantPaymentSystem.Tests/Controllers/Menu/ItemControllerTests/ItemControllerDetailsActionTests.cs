@@ -4,28 +4,28 @@ using RestaurantPaymentSystem.Controllers.Menu;
 using RestaurantPaymentSystem.Tests.Controllers.Shared;
 using RestaurantPaymentSystem.Tests.DB;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Menu.ItemControllerTests
 {
     [TestClass]
-    public class SubcategoryControllerDetailsActionTests
+    public class ItemControllerDetailsActionTests
     {
-        private SubcategoryController _subcategoryController;
+        private ItemController _controller;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _subcategoryController = ControllerFactory.GetSubcategoryController();
+            _controller = ControllerFactory.GetItemController();
         }
 
         [TestMethod]
-        public void SubcategoryControllerDetailsActionGetActionRendersRightView()
+        public void ItemControllerDetailsActionGetActionRendersRightView()
         {
             //arrange
             const string viewName = "Details";
-            var subcategory = Constants.SubcategoriesInDatabase[0];
+            var item = Constants.ItemsInDatabase[0];
 
             //act
-            ViewResult result = _subcategoryController.Details(subcategory.Id) as ViewResult;
+            ViewResult result = _controller.Details(item.Id) as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -33,14 +33,14 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTe
         }
 
         [TestMethod]
-        public void SubcategoryControllerDetailsActionModelDoesntExist()
+        public void ItemControllerDetailsActionModelDoesntExist()
         {
             //arrange
-            var subcategory = Constants.SubcategoriesNotInDatabase[0];
+            var item = Constants.ItemsNotInDatabase[0];
 
             //act
-            HttpNotFoundResult result = _subcategoryController.Details(subcategory.Id) as HttpNotFoundResult;
-            
+            HttpNotFoundResult result = _controller.Details(item.Id) as HttpNotFoundResult;
+
             //assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));

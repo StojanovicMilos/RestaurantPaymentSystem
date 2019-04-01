@@ -1,28 +1,29 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPaymentSystem.Controllers;
 using RestaurantPaymentSystem.Models;
+using RestaurantPaymentSystem.Tests.Controllers.Shared;
 using RestaurantPaymentSystem.Tests.DB;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Linq;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Order.TableControllerTests
 {
     [TestClass]
     public class TableControllerAllTablesActionTests
     {
-        private TableController tableController;
+        private TableController _controller;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            this.tableController = ControllerFactory.GetTableController();
+            this._controller = ControllerFactory.GetTableController();
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            this.tableController.Dispose();
+            this._controller.Dispose();
         }
 
         [TestMethod]
@@ -32,7 +33,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
             string viewName = "AllTables";
 
             //act
-            ViewResult result = tableController.AllTables() as ViewResult;
+            ViewResult result = _controller.AllTables() as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -48,7 +49,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
             var table2 = Constants.TablesInDatabase[2];
 
             //act
-            ViewResult result = tableController.AllTables() as ViewResult;
+            ViewResult result = _controller.AllTables() as ViewResult;
 
             //assert
             var model = (result.ViewData.Model as IEnumerable<Table>).ToList();

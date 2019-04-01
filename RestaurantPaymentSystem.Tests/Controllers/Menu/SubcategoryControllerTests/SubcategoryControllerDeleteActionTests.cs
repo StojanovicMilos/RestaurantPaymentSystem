@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPaymentSystem.Controllers.Menu;
 using RestaurantPaymentSystem.Models;
+using RestaurantPaymentSystem.Tests.Controllers.Shared;
 using RestaurantPaymentSystem.Tests.DB;
 
 namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTests
@@ -84,10 +85,11 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.SubcategoryControllerTe
             ViewResult result = _subcategoryController.DeleteConfirmed(subcategory.Id) as ViewResult;
             Assert.IsNotNull(result);
             var model = (result.ViewData.Model as IEnumerable<Category>).ToList();
+            var allSubcategories = model.SelectMany(c => c.Subcategories).ToList();
 
             //assert
             Assert.AreEqual(viewName, result.ViewName);
-            CollectionAssert.DoesNotContain(model, subcategory);
+            CollectionAssert.DoesNotContain(allSubcategories, subcategory);
         }
 
         [TestMethod]

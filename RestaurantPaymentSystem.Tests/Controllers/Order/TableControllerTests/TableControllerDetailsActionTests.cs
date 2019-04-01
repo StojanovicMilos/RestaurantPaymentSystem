@@ -3,6 +3,7 @@ using RestaurantPaymentSystem.Controllers;
 using RestaurantPaymentSystem.Models;
 using RestaurantPaymentSystem.Tests.DB;
 using System.Web.Mvc;
+using RestaurantPaymentSystem.Tests.Controllers.Shared;
 
 namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
 {

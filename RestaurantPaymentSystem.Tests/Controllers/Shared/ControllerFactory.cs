@@ -1,27 +1,17 @@
-﻿using System;
-using RestaurantPaymentSystem.Controllers;
+﻿using RestaurantPaymentSystem.Controllers;
 using RestaurantPaymentSystem.Controllers.Menu;
-using RestaurantPaymentSystem.DB;
 using RestaurantPaymentSystem.Tests.DB;
 
-namespace RestaurantPaymentSystem.Tests.Controllers
+namespace RestaurantPaymentSystem.Tests.Controllers.Shared
 {
     public static class ControllerFactory
     {
-        public static TableController GetTableController()
-        {
-            return new TableController(new InMemoryRestaurantPaymentSystemDb());
-        }
+        public static TableController GetTableController() => new TableController(new InMemoryRestaurantPaymentSystemDb());
 
-        public static CategoryController GetCategoryController()
-        {
-            //TODO UNDO!!! ???
-            return new CategoryController(new InMemoryRestaurantPaymentSystemDb());
-        }
+        public static CategoryController GetCategoryController() => new CategoryController(new InMemoryRestaurantPaymentSystemDb());
 
-        public static SubcategoryController GetSubcategoryController()
-        {
-            return new SubcategoryController(new InMemoryRestaurantPaymentSystemDb());
-        }
+        public static SubcategoryController GetSubcategoryController() => new SubcategoryController(new InMemoryRestaurantPaymentSystemDb());
+
+        public static ItemController GetItemController() => new ItemController(new InMemoryRestaurantPaymentSystemDb());
     }
 }

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPaymentSystem.Controllers;
 using RestaurantPaymentSystem.Models;
+using RestaurantPaymentSystem.Tests.Controllers.Shared;
 using RestaurantPaymentSystem.Tests.DB;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Order.TableControllerTests
 {
     [TestClass]
     public class TableControllerDeleteActionTests

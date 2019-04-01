@@ -21,5 +21,10 @@ namespace RestaurantPaymentSystem.DB
         void SaveNewSubcategory(Subcategory model);
         void SaveExistingSubcategory(Subcategory existingSubcategory, Subcategory subcategory);
         void DeleteSubcategory(Subcategory subcategory);
+
+        Item GetItem(int id);
+        void SaveNewItem(Item model);
+        void SaveExistingItem(Item existingItem, Item item);
+        void DeleteItem(Item item);
     }
 }

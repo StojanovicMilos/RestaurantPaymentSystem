@@ -200,6 +200,7 @@
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Account\ManageController.cs" />
     <Compile Include="Controllers\Account\RoleController.cs" />
+    <Compile Include="Controllers\Menu\ItemController.cs" />
     <Compile Include="Controllers\Menu\SubcategoryController.cs" />
     <Compile Include="Controllers\Order\TableController.cs" />
     <Compile Include="DB\EFRestaurantPaymentSystemDB.cs" />
@@ -215,6 +216,10 @@
     <Compile Include="Migrations\201903221324417_AddCategoryIdToSubcategory.cs" />
     <Compile Include="Migrations\201903221324417_AddCategoryIdToSubcategory.Designer.cs">
       <DependentUpon>201903221324417_AddCategoryIdToSubcategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903291053010_RenameItemNameAndAddSubcategoryIdToItem.cs" />
+    <Compile Include="Migrations\201903291053010_RenameItemNameAndAddSubcategoryIdToItem.Designer.cs">
+      <DependentUpon>201903291053010_RenameItemNameAndAddSubcategoryIdToItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -330,7 +335,6 @@
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Details.cshtml" />
     <Content Include="Views\Subcategory\Create.cshtml" />
-    <Content Include="Views\Category\ItemsTest.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -344,6 +348,13 @@
     <Content Include="Views\Subcategory\Delete.cshtml" />
     <Content Include="Views\Subcategory\Details.cshtml" />
     <Content Include="Views\Subcategory\Edit.cshtml" />
+    <Content Include="Views\Item\Create.cshtml" />
+    <Content Include="Views\Item\Delete.cshtml" />
+    <Content Include="Views\Item\Details.cshtml" />
+    <Content Include="Views\Item\Edit.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\AllItems.cshtml" />
+    <Content Include="Views\Shared\_Items.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -367,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903221324417_AddCategoryIdToSubcategory.resx">
       <DependentUpon>201903221324417_AddCategoryIdToSubcategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903291053010_RenameItemNameAndAddSubcategoryIdToItem.resx">
+      <DependentUpon>201903291053010_RenameItemNameAndAddSubcategoryIdToItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

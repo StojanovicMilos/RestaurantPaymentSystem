@@ -11,7 +11,10 @@ namespace RestaurantPaymentSystem.Controllers.Menu
 
         protected override void Dispose(bool disposing)
         {
-            _db?.Dispose();
+            if (disposing)
+            {
+                _db?.Dispose();
+            }
             base.Dispose(disposing);
         }
 
@@ -36,7 +39,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
         {
             if (Request.IsAjaxRequest())
             {
-                var model = _db.GetCategory(categoryId);
+                var model = _db.GetCategory(categoryId).Subcategories;
                 return PartialView("_Subcategories", model);
             }
 
@@ -74,7 +77,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
         }
 
         //??? TODO take a look at authorize action filter
-
+        //??? TODO write tests when trying to delete subcategory with existing items - same with category with existing subcategories
         // POST: Subcategory/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -91,7 +94,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
                     return AllSubcategories();
                 }
             }
-            ModelState.AddModelError("", "Category cannot be deleted because it has subcategories. Please delete all subcategories first.");
+            ModelState.AddModelError("", "Subcategory cannot be deleted because it has items. Please delete all items first.");
             return Delete(id);
         }
 

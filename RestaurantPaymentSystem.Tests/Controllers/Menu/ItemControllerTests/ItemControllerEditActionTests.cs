@@ -7,28 +7,28 @@ using RestaurantPaymentSystem.Models;
 using RestaurantPaymentSystem.Tests.Controllers.Shared;
 using RestaurantPaymentSystem.Tests.DB;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Menu.ItemControllerTests
 {
     [TestClass]
-    public class CategoryControllerEditActionTests
+    public class ItemControllerEditActionTests
     {
-        private CategoryController _categoryController;
+        private ItemController _controller;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _categoryController = ControllerFactory.GetCategoryController();
+            _controller = ControllerFactory.GetItemController();
         }
 
         [TestMethod]
-        public void CategoryControllerEditCategoryGetActionRendersRightView()
+        public void ItemControllerEditItemGetActionRendersRightView()
         {
             //arrange
             const string viewName = "Edit";
-            var category = Constants.CategoriesInDatabase[0];
+            var item = Constants.ItemsInDatabase[0];
 
             //act
-            ViewResult result = _categoryController.Edit(category.Id) as ViewResult;
+            ViewResult result = _controller.Edit(item.Id) as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -36,13 +36,13 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
         }
 
         [TestMethod]
-        public void CategoryControllerEditCategoryGetActionCategoryDoesntExist()
+        public void ItemControllerEditItemGetActionItemDoesntExist()
         {
             //arrange
-            var category = Constants.CategoriesNotInDatabase[0];
+            var item = Constants.ItemsNotInDatabase[0];
 
             //act
-            HttpNotFoundResult result = _categoryController.Edit(category.Id) as HttpNotFoundResult;
+            HttpNotFoundResult result = _controller.Edit(item.Id) as HttpNotFoundResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -50,14 +50,14 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
         }
 
         [TestMethod]
-        public void CategoryControllerEditCategoryPostCategoryDoesntExist()
+        public void ItemControllerEditItemPostItemDoesntExist()
         {
             //arrange
-            const string viewName = "AllCategories";
-            var category = Constants.CategoriesNotInDatabase[0];
+            const string viewName = "AllItems";
+            var item = Constants.ItemsNotInDatabase[0];
 
             //act
-            ViewResult result = _categoryController.Edit(category) as ViewResult;
+            ViewResult result = _controller.Edit(item) as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -65,20 +65,21 @@ namespace RestaurantPaymentSystem.Tests.Controllers.Menu.CategoryControllerTests
         }
 
         [TestMethod]
-        public void CategoryControllerEditCategoryPostCategoryExists()
+        public void ItemControllerEditItemPostItemExists()
         {
             //arrange
-            const string viewName = "AllCategories";
-            var category = Constants.CategoriesInDatabase[0];
+            const string viewName = "AllItems";
+            var item = Constants.ItemsInDatabase[0];
 
             //act
-            ViewResult result = _categoryController.Edit(category) as ViewResult;
+            ViewResult result = _controller.Edit(item) as ViewResult;
             Assert.IsNotNull(result);
             var model = (result.ViewData.Model as IEnumerable<Category>).ToList();
-            
+            var allItems = model.SelectMany(c => c.Subcategories).SelectMany(s => s.Items).ToList();
+
             //assert
             Assert.AreEqual(viewName, result.ViewName);
-            CollectionAssert.Contains(model, category);
+            CollectionAssert.Contains(allItems, item);
         }
     }
 }

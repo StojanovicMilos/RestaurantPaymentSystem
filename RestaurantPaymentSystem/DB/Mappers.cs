@@ -17,4 +17,13 @@ namespace RestaurantPaymentSystem.DB
             existingSubcategory.SubcategoryName = subcategory.SubcategoryName;
         }
     }
+
+    public static class ItemMappers
+    {
+        public static void MapNewModelToExistingModel(Item item, Item existingItem)
+        {
+            existingItem.ItemName = item.ItemName;
+            existingItem.Price = item.Price;
+        }
+    }
 }

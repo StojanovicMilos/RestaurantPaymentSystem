@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantPaymentSystem.Models
@@ -9,7 +10,10 @@ namespace RestaurantPaymentSystem.Models
         [Key]
         public int Id { get; set; }
         [StringLength(maximumLength: 100, MinimumLength = 3)]
-        public string Name { get; set; }
+        [DisplayName("Item Name")]
+        public string ItemName { get; set; }
         public int Price { get; set; }
+
+        public int SubcategoryId { get; set; }
     }
 }

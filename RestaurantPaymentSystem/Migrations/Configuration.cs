@@ -18,9 +18,9 @@ namespace RestaurantPaymentSystem.Migrations
         //TODO ??? FIX
         protected override void Seed(EFRestaurantPaymentSystemDB context)
         {
-            //TakeDownTables(context);
+            TakeDownTables(context);
             SeedTables(context);
-            //TakeDownMenu(context);
+            TakeDownMenu(context);
             SeedMenu(context);
         }
 
@@ -38,12 +38,9 @@ namespace RestaurantPaymentSystem.Migrations
         private void SeedTables(EFRestaurantPaymentSystemDB context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
-            //while (context.Tables.Count() < 3)
-            //{
-                context.Tables.Add(new Table());
-                context.Tables.Add(new Table());
-                context.Tables.Add(new Table());
-            //}
+            context.Tables.Add(new Table());
+            context.Tables.Add(new Table());
+            context.Tables.Add(new Table());
         }
 
         private void TakeDownMenu(EFRestaurantPaymentSystemDB context)
@@ -53,17 +50,14 @@ namespace RestaurantPaymentSystem.Migrations
 
             context.Subcategories.RemoveRange(context.Subcategories);
 
-            foreach (var category in context.Categories)
+            foreach (var category in context.Categories.Where(c => c.Subcategories != null))
             {
-                if (category.Subcategories != null)
+                foreach (var subcategory in category.Subcategories)
                 {
-                    foreach (var subcategory in category.Subcategories)
-                    {
-                        subcategory.Items.RemoveAll(i => true);
-                    }
-
-                    category.Subcategories.RemoveAll(s => true);
+                    subcategory.Items.RemoveAll(i => true);
                 }
+
+                category.Subcategories.RemoveAll(s => true);
             }
 
             context.Categories.RemoveRange(context.Categories);
@@ -82,8 +76,8 @@ namespace RestaurantPaymentSystem.Migrations
                             SubcategoryName = "Soups",
                             Items = new List<Item>
                             {
-                                new Item {Name = "Chicken soup", Price = 200},
-                                new Item {Name = "Turkey soup", Price = 250}
+                                new Item {ItemName = "Chicken soup", Price = 200},
+                                new Item {ItemName = "Turkey soup", Price = 250}
                             }
                         },
                         new Subcategory
@@ -91,8 +85,8 @@ namespace RestaurantPaymentSystem.Migrations
                             SubcategoryName = "Appetizers",
                             Items = new List<Item>
                             {
-                                new Item {Name = "Bruschetta", Price = 100},
-                                new Item {Name = "Meat appetizer", Price = 200}
+                                new Item {ItemName = "Bruschetta", Price = 100},
+                                new Item {ItemName = "Meat appetizer", Price = 200}
                             }
                         }
                     }
@@ -107,8 +101,8 @@ namespace RestaurantPaymentSystem.Migrations
                             SubcategoryName = "non-alcoholic drinks",
                             Items = new List<Item>
                             {
-                                new Item {Name = "Coca-Cola", Price = 150},
-                                new Item {Name = "Sprite", Price = 150}
+                                new Item {ItemName = "Coca-Cola", Price = 150},
+                                new Item {ItemName = "Sprite", Price = 150}
                             }
                         },
                         new Subcategory
@@ -116,8 +110,8 @@ namespace RestaurantPaymentSystem.Migrations
                             SubcategoryName = "alcoholic drinks",
                             Items = new List<Item>
                             {
-                                new Item {Name = "Beer", Price = 150},
-                                new Item {Name = "Wine", Price = 300}
+                                new Item {ItemName = "Beer", Price = 150},
+                                new Item {ItemName = "Wine", Price = 300}
                             }
                         }
                     }

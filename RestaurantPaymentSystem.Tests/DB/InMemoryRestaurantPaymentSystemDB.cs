@@ -11,6 +11,7 @@ namespace RestaurantPaymentSystem.Tests.DB
         private readonly List<Table> _tables;
         private readonly List<Category> _categories;
         private readonly List<Subcategory> _subcategories;
+        private readonly List<Item> _items;
 
         public InMemoryRestaurantPaymentSystemDb()
         {
@@ -22,6 +23,9 @@ namespace RestaurantPaymentSystem.Tests.DB
 
             _subcategories = new List<Subcategory>();
             _subcategories.AddRange(Constants.SubcategoriesInDatabase);
+
+            _items = new List<Item>();
+            _items.AddRange(Constants.ItemsInDatabase);
         }
 
         public Exception ExceptionToThrow { get; set; }
@@ -50,7 +54,12 @@ namespace RestaurantPaymentSystem.Tests.DB
 
         public void SaveExistingSubcategory(Subcategory existingSubcategory, Subcategory subcategory) => SubcategoryMappers.MapNewModelToExistingModel(subcategory, existingSubcategory);
 
-        public void DeleteSubcategory(Subcategory subcategory) => _subcategories.Remove(subcategory);
+        public void DeleteSubcategory(Subcategory subcategory)
+        {
+            var category = GetCategory(subcategory.CategoryId);
+            category.Subcategories.Remove(subcategory);
+            _subcategories.Remove(subcategory);
+        }
 
         public void DeleteTable(Table table) => _tables.Remove(table);
 
@@ -66,5 +75,23 @@ namespace RestaurantPaymentSystem.Tests.DB
         public Table GetTable(int id) => _tables.Find(t => t.Id == id);
 
         IQueryable<Table> IRestaurantPaymentSystemDb.GetTables() => _tables.AsQueryable();
+
+        public Item GetItem(int id) => _items.Find(i => i.Id == id);
+
+        public void SaveNewItem(Item item)
+        {
+            var subcategory = GetSubcategory(item.SubcategoryId);
+            subcategory.Items.Add(item);
+            _items.Add(item);
+        }
+
+        public void SaveExistingItem(Item existingItem, Item item) => ItemMappers.MapNewModelToExistingModel(existingItem, item);
+
+        public void DeleteItem(Item item)
+        {
+            var subcategory = GetSubcategory(item.SubcategoryId);
+            subcategory.Items.Remove(item);
+            _items.Remove(item);
+        }
     }
 }

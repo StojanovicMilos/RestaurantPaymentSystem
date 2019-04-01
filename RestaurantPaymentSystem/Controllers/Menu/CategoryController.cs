@@ -12,7 +12,10 @@ namespace RestaurantPaymentSystem.Controllers.Menu
 
         protected override void Dispose(bool disposing)
         {
-            _db?.Dispose();
+            if (disposing)
+            {
+                _db?.Dispose();
+            }
             base.Dispose(disposing);
         }
 
