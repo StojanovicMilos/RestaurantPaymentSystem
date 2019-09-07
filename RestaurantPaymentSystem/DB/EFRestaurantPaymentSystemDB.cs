@@ -108,6 +108,7 @@ namespace RestaurantPaymentSystem.DB
         public void SaveNewItem(Item item)
         {
             Items.Add(item);
+            SaveChanges();
         }
 
         public void SaveExistingItem(Item existingItem, Item item)
