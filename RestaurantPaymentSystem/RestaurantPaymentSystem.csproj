@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.2.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -26,6 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -193,20 +195,40 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\TableController.cs" />
+    <Compile Include="Controllers\Account\AccountController.cs" />
+    <Compile Include="Controllers\Menu\CategoryController.cs" />
+    <Compile Include="Controllers\Home\HomeController.cs" />
+    <Compile Include="Controllers\Account\ManageController.cs" />
+    <Compile Include="Controllers\Account\RoleController.cs" />
+    <Compile Include="Controllers\Menu\ItemController.cs" />
+    <Compile Include="Controllers\Menu\SubcategoryController.cs" />
+    <Compile Include="Controllers\Order\TableController.cs" />
     <Compile Include="DB\EFRestaurantPaymentSystemDB.cs" />
     <Compile Include="DB\IRestaurantPaymentSystemDB.cs" />
+    <Compile Include="DB\Mappers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903220732331_AddNewTablesInDb.cs" />
+    <Compile Include="Migrations\201903220732331_AddNewTablesInDb.Designer.cs">
+      <DependentUpon>201903220732331_AddNewTablesInDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221324417_AddCategoryIdToSubcategory.cs" />
+    <Compile Include="Migrations\201903221324417_AddCategoryIdToSubcategory.Designer.cs">
+      <DependentUpon>201903221324417_AddCategoryIdToSubcategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903291053010_RenameItemNameAndAddSubcategoryIdToItem.cs" />
+    <Compile Include="Migrations\201903291053010_RenameItemNameAndAddSubcategoryIdToItem.Designer.cs">
+      <DependentUpon>201903291053010_RenameItemNameAndAddSubcategoryIdToItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\TableViewModel.cs" />
+    <Compile Include="Models\Subcategory.cs" />
+    <Compile Include="Models\Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -219,15 +241,20 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
@@ -245,10 +272,18 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -262,9 +297,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -293,6 +327,34 @@
     <Content Include="Views\Table\AllTables.cshtml" />
     <Content Include="Views\Table\Delete.cshtml" />
     <Content Include="Views\Table\Details.cshtml" />
+    <Content Include="Views\Category\AllCategories.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Subcategory\AllSubcategories.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Subcategory\Create.cshtml" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\_Subcategories.cshtml" />
+    <Content Include="Views\Subcategory\Delete.cshtml" />
+    <Content Include="Views\Subcategory\Details.cshtml" />
+    <Content Include="Views\Subcategory\Edit.cshtml" />
+    <Content Include="Views\Item\Create.cshtml" />
+    <Content Include="Views\Item\Delete.cshtml" />
+    <Content Include="Views\Item\Details.cshtml" />
+    <Content Include="Views\Item\Edit.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\AllItems.cshtml" />
+    <Content Include="Views\Shared\_Items.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -310,11 +372,29 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903220732331_AddNewTablesInDb.resx">
+      <DependentUpon>201903220732331_AddNewTablesInDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221324417_AddCategoryIdToSubcategory.resx">
+      <DependentUpon>201903221324417_AddCategoryIdToSubcategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903291053010_RenameItemNameAndAddSubcategoryIdToItem.resx">
+      <DependentUpon>201903291053010_RenameItemNameAndAddSubcategoryIdToItem.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

@@ -1,0 +1,49 @@
+﻿	[TestClass]
+	public class ControllerClassNameDefaultActionActionTests
+	{
+		private ControllerClassName controllerName;
+
+		[TestInitialize]
+		public void TestInitialize()
+		{
+			this.controllerName = ControllerFactory.GetControllerClassName();
+		}
+
+		[TestCleanup]
+		public void TestCleanup()
+		{
+			this.controllerName.Dispose();
+		}
+
+		[TestMethod]
+		public void ControllerClassNameDefaultActionActionRendersRightView()
+		{
+			//arrange
+			string viewName = ???;
+
+			//act
+			ViewResult result = controllerName.DefaultAction() as ViewResult;
+
+			//assert
+			Assert.IsNotNull(result);
+			Assert.AreEqual(viewName, result.ViewName);
+		}
+
+		[TestMethod]
+		public void ControllerClassNameDefaultActionActionHasItems()
+		{
+			//arrange
+			var itemName0 = Constants.collectionInDatabase[0];
+			var itemName1 = Constants.collectionInDatabase[1];
+			var itemName2 = Constants.collectionInDatabase[2];
+
+			//act
+			ViewResult result = controllerName.DefaultAction() as ViewResult;
+
+			//assert
+			var model = (result.ViewData.Model as IEnumerable<ModelClassName>).ToList();
+			CollectionAssert.Contains(model, itemName0);
+			CollectionAssert.Contains(model, itemName1);
+			CollectionAssert.Contains(model, itemName2);
+		}
+	}

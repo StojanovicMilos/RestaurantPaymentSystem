@@ -1,0 +1,63 @@
+﻿	[TestClass]
+    public class ControllerClassNameCreateActionTests
+    {
+		private ControllerClassName controllerName;
+
+		[TestInitialize]
+		public void TestInitialize()
+		{
+			this.controllerName = ControllerFactory.GetControllerClassName();
+		}
+
+		[TestCleanup]
+		public void TestCleanup()
+		{
+			this.controllerName.Dispose();
+		}
+
+        [TestMethod]
+        public void ControllerClassNameCreateActionGetActionRendersRightView()
+        {
+            //arrange
+            string viewName = "Create";
+
+            //act
+            ViewResult result = controllerName.Create() as ViewResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+        }
+
+        [TestMethod]
+        public void ControllerClassNameCreateActionPostModelStateInvalid()
+        {
+            //arrange
+            string viewName = "Create";
+            controllerName.ModelState.AddModelError("test", "test");
+            var itemName = Constants.collectionNotInDatabase[0];
+
+            //act
+            ViewResult result = controllerName.Create(itemName) as ViewResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(viewName, result.ViewName);
+        }
+
+        [TestMethod]
+        public void ControllerClassNameCreateActionPostModelStateValid()
+        {
+            //arrange
+            string viewName = ???;
+            var itemName = Constants.collectionNotInDatabase[0];
+
+            //act
+            ViewResult result = controllerName.Create(itemName) as ViewResult;
+            //assert
+            Assert.IsNotNull(result);
+            var model = (result.ViewData.Model as IEnumerable<ModelClassName>).ToList();
+            Assert.AreEqual(viewName, result.ViewName);
+            CollectionAssert.Contains(model, itemName);
+        }
+    }

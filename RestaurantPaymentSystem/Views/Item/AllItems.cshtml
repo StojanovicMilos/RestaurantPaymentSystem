@@ -1,0 +1,90 @@
+﻿@model IEnumerable<RestaurantPaymentSystem.Models.Category>
+
+<br />
+<br />
+<h2>All Items</h2>
+
+<p>
+    <table>
+        <tr>
+            <td>
+                Category
+                @Html.DropDownList(
+                    "CategoryDropDown",
+                    new SelectList(
+                        Model.Select(x => new {Value = x.Id, Text = x.CategoryName}),
+                        "Value",
+                        "Text"
+                        )
+                    )
+            </td>
+            <td style="width: 20px">
+
+            </td>
+            <td>
+                Subcategory
+                @Html.DropDownList(
+                    "SubcategoryDropDown",
+                    new SelectList(
+                        Model.First().Subcategories.Select(x => new {Value = x.Id, Text = x.SubcategoryName}),
+                        "Value",
+                        "Text"
+                        )
+                    )
+            </td>
+        </tr>
+    </table>
+</p>
+
+<div id="items"></div>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        CategoryChange();
+    });
+
+    $('#CategoryDropDown').change(CategoryChange);
+
+    function CategoryChange() {
+
+        var selectedCategory = $('#CategoryDropDown').val();
+
+        $.ajax({
+            url: 'GetAllSubcategoryNamesForCategory?categoryId=' + selectedCategory,
+            dataType: 'html',
+            success: function (data) {
+                data = $.parseJSON(data);
+                var dropdown = $("#SubcategoryDropDown");
+                $(dropdown).empty();
+
+                $(data).each(function () {
+                    var option = $("<option />");
+                    option.html(this.SubcategoryName);
+                    option.val(this.Id);
+                    dropdown.append(option);
+                });
+
+                //$("#SubcategoryDropDown").val($("#target option:first").val()); //select first subcategory
+
+                SubcategoryChange();
+            }
+        });
+    }
+
+    $('#SubcategoryDropDown').change(SubcategoryChange);
+
+    function SubcategoryChange() {
+
+        var selectedSubcategory = $('#SubcategoryDropDown').val();
+
+        $.ajax({
+            url: 'GetAllItemsForSubcategory?subcategoryId=' + selectedSubcategory,
+            dataType: 'html',
+            success: function (data) {
+                $('#items').html(data);
+                //$('#items').effect("highlight"); //TODO add jquery.ui later - pluralsight odetofood module 7 OdeToFood/Scripts/otf.js
+            }
+        });
+    }
+</script>

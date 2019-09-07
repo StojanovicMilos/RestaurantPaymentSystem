@@ -1,0 +1,41 @@
+﻿@model IEnumerable<RestaurantPaymentSystem.Models.Category>
+
+<br />
+<br />
+<h2>All Subcategories</h2>
+
+<p>
+    Category
+    @Html.DropDownList(
+        "CategoryDropDown",
+        new SelectList(
+            Model.Select(x => new {Value = x.Id, Text = x.CategoryName}),
+            "Value",
+            "Text"
+            )
+        )
+</p>
+
+<div id="subcategories"></div>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        CategoryChange();
+    });
+
+    $('#CategoryDropDown').change(CategoryChange);
+
+    function CategoryChange() {
+
+        var selectedCategory = $('#CategoryDropDown').val();
+
+        $.ajax({
+            url: 'GetAllSubcategoriesForCategory?categoryId=' + selectedCategory,
+            dataType: 'html',
+            success: function(data) {
+                $('#subcategories').html(data);
+            }
+        });
+    }
+</script>

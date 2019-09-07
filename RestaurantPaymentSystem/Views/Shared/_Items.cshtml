@@ -1,0 +1,28 @@
+﻿@model IEnumerable<RestaurantPaymentSystem.Models.Item>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Item", new { id=item.Id }, null) |
+                @Html.ActionLink("Details", "Details", "Item", new { id=item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Item", new { id=item.Id }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    @Html.ActionLink("Create New Item", "Create", "Item", new { subcategoryId = Model.First().SubcategoryId }, null)
+</p>

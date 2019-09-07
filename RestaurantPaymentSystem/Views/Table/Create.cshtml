@@ -1,4 +1,4 @@
-﻿@model RestaurantPaymentSystem.Models.TableViewModel
+﻿@model RestaurantPaymentSystem.Models.Table
 
 @{
     ViewBag.Title = "Create";
@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TableViewModel</h4>
+        <h4>TableModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -23,5 +23,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "AllTables")
 </div>

@@ -1,25 +1,39 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPaymentSystem.Controllers;
 using RestaurantPaymentSystem.Models;
+using RestaurantPaymentSystem.Tests.Controllers.Shared;
 using RestaurantPaymentSystem.Tests.DB;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Linq;
 
-namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
+namespace RestaurantPaymentSystem.Tests.Controllers.Order.TableControllerTests
 {
     [TestClass]
     public class TableControllerAllTablesActionTests
     {
+        private TableController _controller;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this._controller = ControllerFactory.GetTableController();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            this._controller.Dispose();
+        }
+
         [TestMethod]
         public void TableControllerAllTablesActionRendersRightView()
         {
             //arrange
-            TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "alltables";
+            string viewName = "AllTables";
 
             //act
-            ViewResult result = tableController.AllTables() as ViewResult;
+            ViewResult result = _controller.AllTables() as ViewResult;
 
             //assert
             Assert.IsNotNull(result);
@@ -30,21 +44,18 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         public void TableControllerAllTablesActionHasTables()
         {
             //arrange
-            var table0 = Constants.tables[0];
-            var table1 = Constants.tables[1];
-            var table2 = Constants.tables[2];
-            TableController tableController = ControllerFactory.GetTableController();
+            var table0 = Constants.TablesInDatabase[0];
+            var table1 = Constants.TablesInDatabase[1];
+            var table2 = Constants.TablesInDatabase[2];
 
             //act
-            ViewResult result = tableController.AllTables() as ViewResult;
+            ViewResult result = _controller.AllTables() as ViewResult;
 
             //assert
-
-            var model = (result.ViewData.Model as System.Collections.ICollection);
+            var model = (result.ViewData.Model as IEnumerable<Table>).ToList();
             CollectionAssert.Contains(model, table0);
             CollectionAssert.Contains(model, table1);
             CollectionAssert.Contains(model, table2);
         }
-
     }
 }

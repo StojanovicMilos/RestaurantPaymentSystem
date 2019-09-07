@@ -1,12 +1,4 @@
-﻿using System.Collections;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RestaurantPaymentSystem.Controllers;
-using RestaurantPaymentSystem.Tests.DB;
-
-namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
-{
-    [TestClass]
+[TestClass]
     public class TableControllerCreateActionTests
     {
         [TestMethod]
@@ -14,7 +6,7 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         {
             //arrange
             TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "create";
+            string viewName = "Create";
 
             //act
             ViewResult result = tableController.Create() as ViewResult;
@@ -29,9 +21,9 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         {
             //arrange
             TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "create";
+            string viewName = "Create";
             tableController.ModelState.AddModelError("test", "test");
-            var table = Constants.table4;
+            var table = Constants.tablesOutOfDatabase[0];
 
             //act
             ViewResult result = tableController.Create(table) as ViewResult;
@@ -46,16 +38,15 @@ namespace RestaurantPaymentSystem.Tests.Controllers.TableControllerTests
         {
             //arrange
             TableController tableController = ControllerFactory.GetTableController();
-            string viewName = "alltables";
-            var table = Constants.table4;
+            string viewName = "AllTables";
+            var table = Constants.tablesOutOfDatabase[0];
 
             //act
             ViewResult result = tableController.Create(table) as ViewResult;
-            var model = result.Model as ICollection;
+            var model = (result.ViewData.Model as IEnumerable<TableViewModel>).ToList();
             //assert
             Assert.IsNotNull(result);
             Assert.AreEqual(viewName, result.ViewName);
             CollectionAssert.Contains(model, table);
         }
     }
-}
