@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using RestaurantPaymentSystem.DB;
 using RestaurantPaymentSystem.Models;
 
 namespace RestaurantPaymentSystem.Controllers.Menu
 {
-    //TODO change all return AllCategories(); to redirecttoaction
+    //TODO ??? change all return AllCategories(); to redirecttoaction
     public class CategoryController : Controller
     {
         private readonly IRestaurantPaymentSystemDb _db;

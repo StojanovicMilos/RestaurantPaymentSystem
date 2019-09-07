@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-using System.Net;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using RestaurantPaymentSystem.DB;
 using RestaurantPaymentSystem.Models;
 
@@ -41,7 +39,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
                 return Json(model, JsonRequestBehavior.AllowGet);
             }
 
-            return null;//TODO ??? fix
+            return HttpNotFound();
         }
 
         public ActionResult GetAllItemsForSubcategory(int subcategoryId)
@@ -52,10 +50,10 @@ namespace RestaurantPaymentSystem.Controllers.Menu
                 return PartialView("_Items", model);
             }
 
-            return null;//TODO ??? fix
+            return HttpNotFound();
         }
 
-        //TODO take a look and implement crud actions as default suggests
+        //TODO ??? take a look and implement crud actions as default suggests
         //// GET: Item/Details/5
         //public ActionResult Details(int? id)
         //{

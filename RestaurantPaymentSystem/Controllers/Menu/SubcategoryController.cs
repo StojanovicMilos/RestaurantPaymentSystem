@@ -43,7 +43,7 @@ namespace RestaurantPaymentSystem.Controllers.Menu
                 return PartialView("_Subcategories", model);
             }
 
-            return null;//TODO ??? fix
+            return HttpNotFound();
         }
 
         // GET: Subcategory/Create
